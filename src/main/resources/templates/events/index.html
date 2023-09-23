@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Coding Events</title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+<body class="container">
     <h1>All Events</h1>
+    <nav th:replace="fragments :: navigation"></nav>
 
     <p th:unless="${events} and ${events.size()}">No Events!</p>
 
-    <ul th:if="${events} and ${events.size()}">
-        <th:block th:each="event : ${events}">
-            <li th:text="${event}"></li>
-        </th:block>
-    </ul>
+    <table class="table table-striped" th:if="${events} and ${events.size()}">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Address</th>
+        </tr>
+        </thead>
+        <tr th:each="event : ${events}">
+            <td th:text="${event.get('name')}"></td>
+            <td th:text="${event.get('desc')}"></td>
+            <td th:replace="fragments :: address"></td>
+        </tr>
+    </table>
 </body>
 </html>
