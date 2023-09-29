@@ -10,14 +10,16 @@
     <table class="table table-striped" th:if="${events} and ${events.size()}">
         <thead>
         <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Description</th>
             <th>Address</th>
         </tr>
         </thead>
         <tr th:each="event : ${events}">
-            <td th:text="${event.get('name')}"></td>
-            <td th:text="${event.get('desc')}"></td>
+            <td th:text="${event.id}"></td>
+            <td th:text="${event.name}"></td>
+            <td th:text="${event.description}"></td>
             <td th:replace="fragments :: address"></td>
         </tr>
     </table>
