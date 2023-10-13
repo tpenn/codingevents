@@ -38,6 +38,8 @@ public class EventController {
         model.addAttribute("name", newEvent.getName());
         model.addAttribute("description", newEvent.getDescription());
         model.addAttribute("contactEmail", newEvent.getContactEmail());
+        model.addAttribute("location", newEvent.getLocation());
+        model.addAttribute("numberAttendees", newEvent.getNumberOfAttendees());
         return "events/create";
 
     }
