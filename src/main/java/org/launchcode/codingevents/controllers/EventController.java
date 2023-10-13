@@ -1,9 +1,11 @@
 package org.launchcode.codingevents.controllers;
 
+import jakarta.validation.Valid;
 import org.launchcode.codingevents.data.EventData;
 import org.launchcode.codingevents.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,14 +21,25 @@ public class EventController {
     }
 
     @GetMapping("create")
-    public String renderCreateEventForm() {
+    public String renderCreateEventForm(Model model) {
+        model.addAttribute("title", "Create Event");
+        model.addAttribute(new Event());
         return "events/create";
     }
 
     @PostMapping("create")
-    public String createEvent(@ModelAttribute Event newEvent) {
-        EventData.add(newEvent);
-        return "redirect:/events";
+    public String createEvent(@ModelAttribute @Valid Event newEvent, Errors errors, Model model) {
+        if (!errors.hasErrors()) {
+            EventData.add(newEvent);
+            return "redirect:/events";
+        }
+
+        model.addAttribute("title", "Create Event");
+        model.addAttribute("name", newEvent.getName());
+        model.addAttribute("description", newEvent.getDescription());
+        model.addAttribute("contactEmail", newEvent.getContactEmail());
+        return "events/create";
+
     }
 
     @GetMapping("delete")
